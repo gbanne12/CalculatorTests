@@ -1,0 +1,30 @@
+<project>
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>root</groupId>
+   <version>1.0</version>
+   <properties>
+      <maven.compiler.source>19</maven.compiler.source>
+      <maven.compiler.target>19</maven.compiler.target>
+   </properties>
+   <artifactId>project</artifactId>
+   <packaging>pom</packaging>
+   <name>project</name>
+      <dependencies>
+         <dependency>
+            <groupId>org.jboss.aerogear</groupId>
+            <artifactId>aerogear-otp-java</artifactId>
+            <version>1.0.0</version>
+         </dependency>
+         <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.7.1</version>
+         </dependency>
+         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.9.1</version>
+            <scope>test</scope>
+         </dependency>
+      </dependencies>
+</project>
