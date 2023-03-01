@@ -45,29 +45,25 @@ public class User implements UserAction {
 
     @Override
     public void click(String locator) {
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(locator)));
-        driver.findElement(By.cssSelector(locator)).click();
+        findElement(locator).click();
     }
 
     @Override
     public void fill(String locator, String input) {
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(locator)));
-        WebElement element = driver.findElement(By.cssSelector(locator));
+        WebElement element = findElement(locator);
         element.click();
         element.sendKeys(input);
     }
 
     @Override
     public void select(String locator, String text) {
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(locator)));
-        WebElement list = driver.findElement(By.cssSelector(locator));
+        WebElement list = findElement(locator);
         new Select(list).selectByVisibleText(text);
     }
 
     @Override
     public void check(String locator) {
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(locator)));
-        WebElement checkbox = driver.findElement(By.cssSelector(locator));
+        WebElement checkbox = findElement(locator);
         if (!checkbox.isSelected()) {
             checkbox.click();
         }
@@ -75,8 +71,7 @@ public class User implements UserAction {
 
     @Override
     public void uncheck(String locator) {
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(locator)));
-        WebElement checkbox = driver.findElement(By.cssSelector(locator));
+        WebElement checkbox = findElement(locator);
         if (checkbox.isSelected()) {
             checkbox.click();
         }
@@ -89,14 +84,25 @@ public class User implements UserAction {
 
     @Override
     public String readValue(String locator) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(locator)));
-        return driver.findElement(By.cssSelector(locator)).getAttribute("value");
+        return findElement(locator).getAttribute("value");
     }
 
     @Override
     public Boolean canSee(String locator) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(locator)));
-        return driver.findElement(By.cssSelector(locator)).isDisplayed();
+        WebElement element = findElement(locator);
+        return element.isDisplayed();
     }
 
+    private WebElement findElement(String locator) {
+        WebElement element = null;
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(locator)));
+            element = driver.findElement(By.cssSelector(locator));
+        } catch (TimeoutException e) {
+            System.out.println("Could not find using CSS, assuming it is an xpath expression");
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
+            element = driver.findElement(By.xpath(locator));
+        }
+        return element;
+    }
 }

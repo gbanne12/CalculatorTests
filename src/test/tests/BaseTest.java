@@ -7,7 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 
 /***
- * Handle the launching and closing of the browser only
+ * Handle the setup and teardown actions for a test.
+ * Makes a {@link User} object available to the test classes.
+ * However, {@link tasks.Task} implementations should be preferred for performing actions
  */
 
 class BaseTest {

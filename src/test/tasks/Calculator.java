@@ -23,6 +23,7 @@ public class Calculator implements Task {
     public void add(int numberA, int numberB) {
         performArithmetic("Add", numberA, numberB);
     }
+
     public void subtract(int numberA, int numberB) {
         performArithmetic("Subtract", numberA, numberB);
     }
@@ -36,18 +37,19 @@ public class Calculator implements Task {
     }
 
     public Number getAnswer() {
+        String value = user.readValue(CalculatorPage.ANSWER_FIELD);
         try {
-            return Integer.parseInt(user.readValue(CalculatorPage.ANSWER_FIELD));
+            return Integer.parseInt(value);
         } catch (NumberFormatException exception) {
             System.out.println("Answer not an integer, parsing as double: " + exception.getLocalizedMessage());
-            return Double.parseDouble(user.readValue(CalculatorPage.ANSWER_FIELD));
+            return Double.parseDouble(value);
         }
     }
 
     public boolean isShownInGridView() {
         return user.canSee(IndexPage.CALCULATOR_LINK)
-                && user.canSee(IndexPage.CALCULATOR_CAPTION)
-                && user.canSee(IndexPage.CALCULATOR_HEADER);
+                && user.canSee(IndexPage.CALCULATOR_CAPTION_XPATH)
+                && user.canSee(IndexPage.CALCULATOR_HEADER_XPATH);
     }
 
     private void performArithmetic(String operation, int numberA, int numberB) {
