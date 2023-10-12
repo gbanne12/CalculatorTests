@@ -1,10 +1,16 @@
 package actions;
 
+import elements.ElementFinder;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import webdriver.FindElement;
+import webdriver.Locator;
+import webdriver.LocatorMethod;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,7 +21,7 @@ import java.time.Duration;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
-public class User implements UserAction {
+public class User implements UserAction, BrowserAction {
 
     WebDriver driver;
     WebDriverWait wait;
@@ -23,6 +29,8 @@ public class User implements UserAction {
     @Override
     public void openBrowser() {
         var waitTime = Duration.ofSeconds(5);
+        System.setProperty("webdriver.http.factory", "jdk-http-client");
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, waitTime);
     }

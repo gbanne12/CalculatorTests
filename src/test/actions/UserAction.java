@@ -1,6 +1,8 @@
 package actions;
 
 
+import webdriver.Locator;
+
 import java.io.FileNotFoundException;
 
 /***
@@ -9,25 +11,19 @@ import java.io.FileNotFoundException;
  */
 public interface UserAction {
 
-    void openBrowser();
+    void click(Locator locator);
 
-    void quitBrowser();
+    void fill(Locator locator, String input);
 
-    void takeScreenshot(String filename);
+    void select(Locator locator, String text);
 
-    void click(String locator);
+    void check(Locator locator);
 
-    void fill(String locator, String input);
-
-    void select(String locator, String text);
-
-    void check(String locator);
-
-    void uncheck(String locator);
+    void uncheck(Locator locator);
 
     void navigate(String url);
 
-    String readValue(String locator);
+    String readValue(Locator locator);
 
-    Boolean canSee(String locator);
+    Boolean canSee(Locator locator);
 }
