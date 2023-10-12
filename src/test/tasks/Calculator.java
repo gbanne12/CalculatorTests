@@ -37,7 +37,7 @@ public class Calculator implements Task {
     }
 
     public Number getAnswer() {
-        String value = user.readValue(CalculatorPage.ANSWER_FIELD);
+        String value = user.readValue(CalculatorPage.ANSWER_FIELD_LOCATOR);
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException exception) {
@@ -47,16 +47,16 @@ public class Calculator implements Task {
     }
 
     public boolean isShownInGridView() {
-        return user.canSee(IndexPage.CALCULATOR_LINK)
-                && user.canSee(IndexPage.CALCULATOR_CAPTION_XPATH)
-                && user.canSee(IndexPage.CALCULATOR_HEADER_XPATH);
+        return user.canSee(IndexPage.CALCULATOR_LINK_LOCATOR)
+                && user.canSee(IndexPage.CALCULATOR_CAPTION_LOCATOR)
+                && user.canSee(IndexPage.CALCULATOR_HEADER_LOCATOR);
     }
 
     private void performArithmetic(String operation, int numberA, int numberB) {
-        user.fill(CalculatorPage.FIRST_NUMBER, Integer.toString(numberA));
-        user.fill(CalculatorPage.SECOND_NUMBER, Integer.toString(numberB));
-        user.select(CalculatorPage.OPERATION_LIST, operation);
-        user.click(CalculatorPage.CALCULATE_BUTTON);
+        user.fill(CalculatorPage.FIRST_NUMBER_LOCATOR, Integer.toString(numberA));
+        user.fill(CalculatorPage.SECOND_NUMBER_LOCATOR, Integer.toString(numberB));
+        user.select(CalculatorPage.OPERATION_LIST_LOCATOR, operation);
+        user.click(CalculatorPage.CALCULATE_BUTTON_LOCATOR);
     }
 
 }

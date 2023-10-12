@@ -1,16 +1,15 @@
 package actions;
 
-import elements.ElementFinder;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.*;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import webdriver.FindElement;
 import webdriver.Locator;
-import webdriver.LocatorMethod;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -52,25 +51,25 @@ public class User implements UserAction, BrowserAction {
     }
 
     @Override
-    public void click(String locator) {
+    public void click(Locator locator) {
         findElement(locator).click();
     }
 
     @Override
-    public void fill(String locator, String input) {
+    public void fill(Locator locator, String input) {
         WebElement element = findElement(locator);
         element.click();
         element.sendKeys(input);
     }
 
     @Override
-    public void select(String locator, String text) {
+    public void select(Locator locator, String text) {
         WebElement list = findElement(locator);
         new Select(list).selectByVisibleText(text);
     }
 
     @Override
-    public void check(String locator) {
+    public void check(Locator locator) {
         WebElement checkbox = findElement(locator);
         if (!checkbox.isSelected()) {
             checkbox.click();
@@ -78,7 +77,7 @@ public class User implements UserAction, BrowserAction {
     }
 
     @Override
-    public void uncheck(String locator) {
+    public void uncheck(Locator locator) {
         WebElement checkbox = findElement(locator);
         if (checkbox.isSelected()) {
             checkbox.click();
@@ -91,17 +90,17 @@ public class User implements UserAction, BrowserAction {
     }
 
     @Override
-    public String readValue(String locator) {
+    public String readValue(Locator locator) {
         return findElement(locator).getAttribute("value");
     }
 
     @Override
-    public Boolean canSee(String locator) {
+    public Boolean canSee(Locator locator) {
         WebElement element = findElement(locator);
         return element.isDisplayed();
     }
 
-    private WebElement findElement(String locator) {
+  /*  private WebElement findElement(WebElement element) {
         WebElement element = null;
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(locator)));
@@ -110,6 +109,22 @@ public class User implements UserAction, BrowserAction {
             System.out.println("Could not find using CSS, assuming it is an xpath expression");
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
             element = driver.findElement(By.xpath(locator));
+        }
+        return element;
+    }*/
+
+    private WebElement findElement(Locator locator) {
+        WebElement element = null;
+        FindElement findElement = new FindElement(driver, wait);
+
+        switch (locator.method()) {
+            case BY_ROLE -> element = findElement.getByRole(locator.value(), locator.additionalValue());
+            case BY_LABEL -> element = findElement.getByLabel(locator.value());
+            case BY_TEXT -> element = findElement.getByText(locator.value());
+            case BY_PLACEHOLDER -> element = findElement.getByPlaceholder(locator.value());
+            case BY_TESTID -> element = findElement.getByTestId(locator.value());
+            case BY_XPATH -> element = findElement.getByXpath(locator.value());
+            case BY_CSS -> element = findElement.getByCssSelector(locator.value());
         }
         return element;
     }
