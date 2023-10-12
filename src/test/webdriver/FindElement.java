@@ -30,6 +30,7 @@ public class FindElement implements Locatable {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathLabelSelector)));
         WebElement labelElement = driver.findElement(By.xpath(xpathLabelSelector));
 
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(labelElement.getAttribute("for"))));
         return driver.findElement(By.id(labelElement.getAttribute("for")));
     }
@@ -43,7 +44,7 @@ public class FindElement implements Locatable {
 
     @Override
     public WebElement getByPlaceholder(String placeholderValue) {
-        String cssPlaceholderSelector = "\"[placeholder='\" + placeholderValue + \"']\"";
+        String cssPlaceholderSelector = "[placeholder='" + placeholderValue + "']";
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssPlaceholderSelector)));
         return driver.findElement(By.cssSelector(cssPlaceholderSelector));
     }

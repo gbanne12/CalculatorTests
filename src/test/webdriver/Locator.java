@@ -30,5 +30,4 @@ public record Locator(LocatorMethod method, String value, String additionalValue
         return new Locator(LocatorMethod.BY_XPATH, xpathSelector, null);
     }
 
-
 }

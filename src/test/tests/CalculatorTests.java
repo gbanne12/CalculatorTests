@@ -1,9 +1,8 @@
 package tests;
 
-import pages.URL;
-import tasks.Calculator;
 import org.junit.jupiter.api.Test;
-
+import pages.URL;
+import tasks.calculatorexample.Calculator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

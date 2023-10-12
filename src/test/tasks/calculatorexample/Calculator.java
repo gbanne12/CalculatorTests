@@ -1,9 +1,10 @@
-package tasks;
+package tasks.calculatorexample;
 
 import actions.User;
-import pages.CalculatorPage;
-import pages.IndexPage;
 import pages.URL;
+import pages.calculatorexample.CalculatorPage;
+import pages.calculatorexample.IndexPage;
+import tasks.Task;
 
 /*** Handle tasks the user might perform with and related to the calculator.
  * Note: these tasks can happen on multiple pages.
