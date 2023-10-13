@@ -1,12 +1,29 @@
 package elements;
 
 public enum AriaRole {
-
+    BUTTON("button"),
+    DIALOG("dialog"),
+    FORM("form"),
+    HEADING("heading"),
+    IMAGE("IMAGE"),
+    LISTITEM("listitem"),
+    LIST("list"),
+    OPTION("option"),
+    PARAGRAPH("paragraph"),
+    TEXTBOX("textbox"),
     CHECKBOX("checkbox"),
-    MENUITEM("menuitem"),
-    TAB("tab"),
-    BUTTON("button");
+    RADIO("radio"),
+    LISTBOX("listbox"),
+    COMBOBOX("combobox");
 
-    AriaRole(String checkbox) {
+    private final String value;
+
+    AriaRole(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }
+
