@@ -1,9 +1,7 @@
 package actions;
 
 
-import webdriver.Locator;
-
-import java.io.FileNotFoundException;
+import webdriver.By;
 
 /***
  * Interface for the common actions a user will need to perform.
@@ -11,19 +9,19 @@ import java.io.FileNotFoundException;
  */
 public interface UserAction {
 
-    void click(Locator locator);
+    void click(By locator);
 
-    void fill(Locator locator, String input);
+    void fill(By locator, String input);
 
-    void select(Locator locator, String text);
+    void select(By locator, String text);
 
-    void check(Locator locator);
+    void check(By locator);
 
-    void uncheck(Locator locator);
+    void uncheck(By locator);
 
     void navigate(String url);
 
-    String readValue(Locator locator);
+    String readValue(By locator);
 
-    Boolean canSee(Locator locator);
+    Boolean canSee(By locator);
 }

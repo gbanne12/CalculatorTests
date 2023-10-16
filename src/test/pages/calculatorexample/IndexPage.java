@@ -1,13 +1,13 @@
 package pages.calculatorexample;
 
-import webdriver.Locator;
+import webdriver.By;
 
 public class IndexPage {
 
-    public static Locator CALCULATOR_LINK_LOCATOR = Locator.createByCss("#gotoBasicCalc");
+    public static By CALCULATOR_LINK_LOCATOR = By.cssSelector("#gotoBasicCalc");
 
-    public static Locator CALCULATOR_HEADER_LOCATOR = Locator.createByXpath("//div//h4[text()='Basic Calculator']");
+    public static By CALCULATOR_HEADER_LOCATOR = By.xpath("//div//h4[text()='Basic Calculator']");
 
-    public static Locator CALCULATOR_CAPTION_LOCATOR = Locator.createByXpath(
+    public static By CALCULATOR_CAPTION_LOCATOR = By.xpath(
             "//div/p[text()='A basic page to practice your test automation.']");
 }

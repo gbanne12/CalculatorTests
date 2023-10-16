@@ -8,8 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import webdriver.By;
 import webdriver.FindElement;
-import webdriver.Locator;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -51,25 +51,25 @@ public class User implements UserAction, BrowserAction {
     }
 
     @Override
-    public void click(Locator locator) {
+    public void click(By locator) {
         findElement(locator).click();
     }
 
     @Override
-    public void fill(Locator locator, String input) {
+    public void fill(By locator, String input) {
         WebElement element = findElement(locator);
         element.click();
         element.sendKeys(input);
     }
 
     @Override
-    public void select(Locator locator, String text) {
+    public void select(By locator, String text) {
         WebElement list = findElement(locator);
         new Select(list).selectByVisibleText(text);
     }
 
     @Override
-    public void check(Locator locator) {
+    public void check(By locator) {
         WebElement checkbox = findElement(locator);
         if (!checkbox.isSelected()) {
             checkbox.click();
@@ -77,7 +77,7 @@ public class User implements UserAction, BrowserAction {
     }
 
     @Override
-    public void uncheck(Locator locator) {
+    public void uncheck(By locator) {
         WebElement checkbox = findElement(locator);
         if (checkbox.isSelected()) {
             checkbox.click();
@@ -90,17 +90,17 @@ public class User implements UserAction, BrowserAction {
     }
 
     @Override
-    public String readValue(Locator locator) {
+    public String readValue(By locator) {
         return findElement(locator).getAttribute("value");
     }
 
     @Override
-    public Boolean canSee(Locator locator) {
+    public Boolean canSee(By locator) {
         WebElement element = findElement(locator);
         return element.isDisplayed();
     }
 
-    public WebElement findElement(Locator locator) {
+    public WebElement findElement(By locator) {
         WebElement element = null;
         FindElement findElement = new FindElement(driver, wait);
 
@@ -116,7 +116,7 @@ public class User implements UserAction, BrowserAction {
         return element;
     }
 
-    public WebElement filterElement(WebElement rootElement, Locator locator) {
+    public WebElement filterElement(WebElement rootElement, By locator) {
         WebElement filteredElement = null;
         FindElement findElement = new FindElement(driver, wait);
 

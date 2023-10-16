@@ -1,6 +1,6 @@
 package pages.calculatorexample;
 
-import webdriver.Locator;
+import webdriver.By;
 
 /***
  * CSS locators for the Calculator Page
@@ -9,16 +9,16 @@ import webdriver.Locator;
 public class CalculatorPage {
 
  // public static Locator FIRST_NUMBER_LOCATOR = Locator.createByCss("input[name='number1']");
- public static Locator FIRST_NUMBER_LOCATOR = Locator.createByLabel("First number");
+ public static By FIRST_NUMBER_LOCATOR = By.label("First number");
 
- public static Locator SECOND_NUMBER_LOCATOR = Locator.createByCss("input[name='number2']");
+ public static By SECOND_NUMBER_LOCATOR = By.cssSelector("input[name='number2']");
 
- public static Locator OPERATION_LIST_LOCATOR = Locator.createByCss("select[name='selectOperation']");
+ public static By OPERATION_LIST_LOCATOR = By.cssSelector("select[name='selectOperation']");
 
- public static Locator CALCULATE_BUTTON_LOCATOR = Locator.createByCss("#calculateButton");
+ public static By CALCULATE_BUTTON_LOCATOR = By.cssSelector("#calculateButton");
 
- public static Locator ANSWER_FIELD_LOCATOR = Locator.createByCss("#numberAnswerField");
+ public static By ANSWER_FIELD_LOCATOR = By.cssSelector("#numberAnswerField");
 
- public static Locator PAGE_HEADER_LOCATOR = Locator.createByCss("div .intro-heading");
+ public static By PAGE_HEADER_LOCATOR = By.cssSelector("div .intro-heading");
 
 }
