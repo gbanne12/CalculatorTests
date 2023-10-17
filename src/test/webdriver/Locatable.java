@@ -12,7 +12,7 @@ public interface Locatable {
 
     WebElement getByPlaceholder(String placeholder);
 
-    WebElement getByTestId(String testId);
+    WebElement getByDataId(String testId);
 
     WebElement getByCssSelector(String cssSelector);
 

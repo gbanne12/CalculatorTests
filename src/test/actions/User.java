@@ -109,7 +109,7 @@ public class User implements UserAction, BrowserAction {
             case BY_LABEL -> element = findElement.getByLabel(locator.value());
             case BY_TEXT -> element = findElement.getByText(locator.value());
             case BY_PLACEHOLDER -> element = findElement.getByPlaceholder(locator.value());
-            case BY_TESTID -> element = findElement.getByTestId(locator.value());
+            case BY_TESTID -> element = findElement.getByDataId(locator.value());
             case BY_XPATH -> element = findElement.getByXpath(locator.value());
             case BY_CSS -> element = findElement.getByCssSelector(locator.value());
         }
@@ -125,7 +125,7 @@ public class User implements UserAction, BrowserAction {
             case BY_LABEL -> filteredElement = findElement.getByLabel(locator.value());
             case BY_TEXT -> filteredElement = findElement.getByText(locator.value());
             case BY_PLACEHOLDER -> filteredElement = findElement.getByPlaceholder(locator.value());
-            case BY_TESTID -> filteredElement = findElement.getByTestId(locator.value());
+            case BY_TESTID -> filteredElement = findElement.getByDataId(locator.value());
             case BY_XPATH -> filteredElement = findElement.getByXpath(locator.value());
             case BY_CSS -> filteredElement = findElement.getByCssSelector(locator.value());
         }
