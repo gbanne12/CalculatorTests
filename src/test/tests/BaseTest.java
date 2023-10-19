@@ -24,6 +24,6 @@ class BaseTest {
     @AfterEach
     public void teardown(TestInfo info) {
         user.takeScreenshot(info.getDisplayName());
-        user.quitBrowser();
+        user.closeBrowser();
     }
 }
