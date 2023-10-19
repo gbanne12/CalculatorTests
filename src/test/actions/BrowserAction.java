@@ -4,7 +4,7 @@ public interface BrowserAction {
 
     void openBrowser();
 
-    void quitBrowser();
+    void closeBrowser();
 
     void takeScreenshot(String filename);
 

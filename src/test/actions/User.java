@@ -1,13 +1,13 @@
 package actions;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import util.ConfigReader;
 import webdriver.By;
 import webdriver.FindElement;
 
@@ -17,26 +17,40 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
+import java.util.UUID;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class User implements UserAction, BrowserAction {
 
-    WebDriver driver;
-    WebDriverWait wait;
+    private WebDriver driver;
+    private WebDriverWait wait;
+
+    private String chromeProfileDirectory;
 
     @Override
     public void openBrowser() {
-        var waitTime = Duration.ofSeconds(5);
         System.setProperty("webdriver.http.factory", "jdk-http-client");
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, waitTime);
+
+        String baseDirectory = System.getProperty("user.dir");
+        var config = new ConfigReader();
+        chromeProfileDirectory = (config.useAuthenticatedProfile()
+                ? baseDirectory + config.getChromeProfileDirectory()
+                : baseDirectory + "\\chromeprofile\\" + UUID.randomUUID());
+
+        ChromeOptions userOptions = new ChromeOptions();
+        userOptions.addArguments("--user-data-dir=" + chromeProfileDirectory);
+
+        driver = new ChromeDriver(userOptions);
+
+        wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+
     }
 
     @Override
-    public void quitBrowser() {
-        driver.quit();
+    public void closeBrowser() {
+        driver.close();
     }
 
     @Override
@@ -52,12 +66,15 @@ public class User implements UserAction, BrowserAction {
 
     @Override
     public void click(By locator) {
+        WebElement element = findElement(locator);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
         findElement(locator).click();
     }
 
     @Override
     public void fill(By locator, String input) {
         WebElement element = findElement(locator);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
         element.click();
         element.sendKeys(input);
     }
@@ -65,12 +82,14 @@ public class User implements UserAction, BrowserAction {
     @Override
     public void select(By locator, String text) {
         WebElement list = findElement(locator);
+        wait.until(ExpectedConditions.elementToBeClickable(list));
         new Select(list).selectByVisibleText(text);
     }
 
     @Override
     public void check(By locator) {
         WebElement checkbox = findElement(locator);
+        wait.until(ExpectedConditions.elementToBeClickable(checkbox));
         if (!checkbox.isSelected()) {
             checkbox.click();
         }
@@ -79,6 +98,7 @@ public class User implements UserAction, BrowserAction {
     @Override
     public void uncheck(By locator) {
         WebElement checkbox = findElement(locator);
+        wait.until(ExpectedConditions.elementToBeClickable(checkbox));
         if (checkbox.isSelected()) {
             checkbox.click();
         }
@@ -91,14 +111,36 @@ public class User implements UserAction, BrowserAction {
 
     @Override
     public String readValue(By locator) {
-        return findElement(locator).getAttribute("value");
+        WebElement element = findElement(locator);
+        wait.until(ExpectedConditions.visibilityOf(element));
+        return element.getAttribute("value");
     }
 
     @Override
     public Boolean canSee(By locator) {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(findElement(locator)));
+        } catch (NoSuchElementException | TimeoutException exception) {
+            return false;
+        }
         WebElement element = findElement(locator);
         return element.isDisplayed();
     }
+
+    public Boolean cannotSee(By locator) {
+        WebElement element;
+        try {
+            element = findElement(locator);
+        } catch (NoSuchElementException exception) {
+            return true;
+        }
+        return wait.until(ExpectedConditions.invisibilityOf(element));
+    }
+
+    public void maxWaitTime(Duration duration) {
+        wait.withTimeout(duration);
+    }
+
 
     public WebElement findElement(By locator) {
         WebElement element = null;
@@ -130,5 +172,9 @@ public class User implements UserAction, BrowserAction {
             case BY_CSS -> filteredElement = findElement.getByCssSelector(locator.value());
         }
         return filteredElement;
+    }
+
+    public String getChromeProfileDirectory() {
+        return chromeProfileDirectory;
     }
 }

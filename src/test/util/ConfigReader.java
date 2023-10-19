@@ -28,4 +28,16 @@ public class ConfigReader {
     public String getChromeProfileDirectory() {
         return properties.getProperty("chromeUserDataDirectory");
     }
+
+    public String getAppUrl() {
+        return properties.getProperty("appUrl");
+    }
+
+    public String getUsername() {
+        return properties.getProperty("username");
+    }
+
+    public String getPassword() {
+        return properties.getProperty("password");
+    }
 }
